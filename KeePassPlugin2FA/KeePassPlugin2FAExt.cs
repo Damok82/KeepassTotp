@@ -16,7 +16,6 @@ namespace KeePassPlugin2FA
     public class KeePassPlugin2FAExt : Plugin
     {
         private const string TwoFactorStringPattern = "2FA";
-        private const Keys Shortcut = Keys.Control | Keys.T;
 
         private IPluginHost _host;
         private readonly List<ToolStripMenuItem> _toolStripMenuItems = new List<ToolStripMenuItem>(3);
@@ -90,7 +89,7 @@ namespace KeePassPlugin2FA
             string toolStripMenuItemName = Properties.UiResources.PluginMenuTypeEntryDisplayName;
             Image pluginMenuEntryImage = _host.MainWindow.ClientIcons.Images[(int)PwIcon.Clock];
             Logging.LogMessage("Creating a new menu item ...");
-            ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem(toolStripMenuItemName, pluginMenuEntryImage, KeePassPlugin2FAExtOnClickEntryHandler, Shortcut) { Enabled = false };
+            ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem(toolStripMenuItemName, pluginMenuEntryImage, KeePassPlugin2FAExtOnClickEntryHandler) { Enabled = false };
 
             Logging.LogMessage($"Adding plugin menu item '{toolStripMenuItemName}' ...");
             _toolStripMenuItems.Add(toolStripMenuItem);
@@ -145,12 +144,12 @@ namespace KeePassPlugin2FA
 
             if (!title.ToLower().Contains(TwoFactorStringPattern.ToLower()))
             {
-                Logging.LogMessage($"Entry's title '{pwEntry.Strings.Get("Title")?.ReadString() ?? "<empty title>"}' ({pwEntry.Uuid.ToHexString()}) does contain the string '{TwoFactorStringPattern}'.");
+                Logging.LogMessage($"MISSING 2FA entry ('{title}' / '{pwEntry.Uuid.ToHexString()}' / '{TwoFactorStringPattern}')");
 
                 return false;
             }
 
-            Logging.LogMessage($"Entry's title '{pwEntry.Strings.Get("Title")?.ReadString() ?? "<empty title>"}' ({pwEntry.Uuid.ToHexString()}) does contain the string '{TwoFactorStringPattern}'.");
+            Logging.LogMessage($"FOUND 2FA entry ('{title}' / '{pwEntry.Uuid.ToHexString()})");
 
             return true;
         }
