@@ -20,6 +20,8 @@ namespace KeePassPlugin2FA
         private IPluginHost _host;
         private readonly List<ToolStripMenuItem> _toolStripMenuItems = new List<ToolStripMenuItem>(3);
 
+        public override string UpdateUrl => "https://raw.githubusercontent.com/Damok82/KeepassTotp/refs/heads/main/version.txt";
+
         public override bool Initialize(IPluginHost host)
         {
             Logging.LogMessage($"{nameof(Initialize)}()");
