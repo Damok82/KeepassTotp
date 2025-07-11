@@ -1,0 +1,3 @@
+:
+KeePassPlugin2FA:99.0
+:
